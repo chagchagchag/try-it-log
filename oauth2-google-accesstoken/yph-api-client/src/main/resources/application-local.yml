@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: yph_api_client
+  cloud:
+    openfeign:
+      client:
+        config:
+          default:
+            connect-timeout: 5000
+            read-timeout: 5000
+            logger-level: basic
+      okhttp:
+        enabled: true
+  config:
+    import:
+      - classpath:ignore/oauth2-client-dev.yml
+      - classpath:ignore/google-account-dev.yml
+      - classpath:feign-clients.yml

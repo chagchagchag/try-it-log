@@ -1,0 +1,35 @@
+
+###
+
+### browser 에 입력
+## 1) 아래 주소를 브라우저에 입력 (clientId 는 꼭 본인 clientId로)
+GET https://accounts.google.com/o/oauth2/auth?client_id={client_id}&redirect_uri={redirect_uri}&response_type=token&scope=profile
+
+## 2) javascript 가 아닌 browser 에서 진행할 경우 로그인 진행을 위해 같은 주소의 하위 주소인 oauthchooseaccount 에 약간의 파라미터를 더 추가해서 한번 더 로그인 화면으로 리다이렉트 된다.
+#GET https://accounts.google.com/o/oauth2/auth?client_id={client_id}&redirect_uri={redirect_uri}&response_type=token&scope=profile
+GET https://accounts.google.com/o/oauth2/auth/oauthchooseaccount?client_id={clientId}&redirect_uri={redirect_uri}&response_type=token&scope=profile&service=lso&o2v=1&ddm=0&flowName=GeneralOAuthFlow
+
+### login 이 완료되면 아래 주소로 이동된다
+## 3) 내 서버 내의 특정 주소로 이동 (localhost:8080)
+http://localhost:8080/welcome?code={코드}&scope={profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile}
+
+
+###
+## 4) access token 획득
+# 브라우저에서만 수행할 때에는 아래와 같이 이동된다
+# https://oauth2.googleapis.com#access_token={access token}&token_type=Bearer&expires_in={3599}&scope={profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile}
+
+# 서버 개발시에는 두가지 방법 중의 하나를 선택하게 되는 듯 하다.
+# 1) 클라이언트(frontend) 페이지에서 access toekn 을 받아서 서버의 특정 url 로 요청을 던진 후 서버에서는 아래 요청을 feign client 로 수행하면 된다.
+# 2) 구글에서 redirect 해준 주소 내에서 code, scope 를 받은 후 서버가 아래요청을 POST 요청 후 access token 을 얻으며, response header 에 access token 을 심어서 client 에 전달해준다.
+## code, client_id, client_secret, redirect_uri, grant_type 파라미터를 POST 요청
+## POST https://oauth2.googleapis.com/token
+##{
+#"code" : "문자열",
+#"client_id": "문자열",
+#"clientSecret": "문자열",
+#"redirect_uri": "문자열",
+#"grant_type": "문자열"
+##}
+
+
