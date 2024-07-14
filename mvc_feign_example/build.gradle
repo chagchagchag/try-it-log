@@ -1,7 +1,7 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.1'
-	id 'io.spring.dependency-management' version '1.1.5'
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group = 'io.example.feign'
@@ -24,11 +24,14 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2023.0.2")
+	set('springCloudVersion', "2021.0.3")
 }
 
 dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	// https://mvnrepository.com/artifact/io.github.openfeign/feign-gson
+	implementation 'io.github.openfeign:feign-gson:13.1'
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
