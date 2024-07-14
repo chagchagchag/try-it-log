@@ -24,13 +24,21 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "2021.0.3")
+	springCloudVersion = "2021.0.3"
+	resilience4jVersion = '1.7.0'
+	openFeignVersion = '13.2.1'
 }
 
 dependencies {
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-	// https://mvnrepository.com/artifact/io.github.openfeign/feign-gson
-	implementation 'io.github.openfeign:feign-gson:13.1'
+	implementation "io.github.resilience4j:resilience4j-feign:${resilience4jVersion}"
+	implementation "io.github.resilience4j:resilience4j-circuitbreaker:${resilience4jVersion}"
+	implementation "io.github.resilience4j:resilience4j-ratelimiter:${resilience4jVersion}"
+
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+	implementation "io.github.openfeign:feign-gson:${openFeignVersion}"
+	implementation "io.github.openfeign:feign-core:${openFeignVersion}"
+	implementation "io.github.openfeign:feign-jackson:${openFeignVersion}"
+//	implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
